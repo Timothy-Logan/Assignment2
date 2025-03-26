@@ -13,8 +13,16 @@ import psutil
 import logging
 from typing import List
 
-# Initialize FastAPI app
 app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "FastAPI is running on the correct port!"}
+
+if __name__ == "__main__":
+    # Retrieve the PORT environment variable (default to 8080 if not set)
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)  # Explicitly pass the port here
 
 # Pydantic models for Input Validation and Response Structure
 class ForecastRequest(BaseModel):
